@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
 // Ruta para crear una nueva mascota
 router.post('/', authMiddleware,async (req, res) => {
     const mascota = new Mascota({
+      img: req.body.img,
       name: req.body.name,
       age: req.body.age,
       description: req.body.description,
