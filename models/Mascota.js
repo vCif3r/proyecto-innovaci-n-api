@@ -5,6 +5,8 @@ const mascotaSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: { type: Number, required: true },
   description: { type: String, required: false}
+}, {
+  timestamps: true // Esto agregará los campos `createdAt` y `updatedAt`
 });
 
 module.exports = mongoose.model('Mascota', mascotaSchema);
