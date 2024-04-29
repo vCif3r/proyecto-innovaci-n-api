@@ -13,11 +13,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const mascota = await Mascota.findById(req.params.id);
+    if (!mascota) {
+      return res.status(404).json({ message: "mascota no encontrada" });
+    }
+    res.json(mascota);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
+
 // Ruta para crear una nueva mascota
 router.post('/', authMiddleware,async (req, res) => {
     const mascota = new Mascota({
       img: req.body.img,
       name: req.body.name,
+      raza: req.body.raza,
       age: req.body.age,
       description: req.body.description,
     });
