@@ -3,8 +3,8 @@ const router = express.Router();
 const Mascota = require("../models/Mascota");
 const authMiddleware = require("../middlewares/authMiddleware");
 
-// Ruta publica para obtener todas las mascotas
-router.get("/", async (req, res) => {
+// Ruta publica para obtener todas las mascotas, requiere autenticacion 
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const mascotas = await Mascota.find();
     res.json(mascotas);

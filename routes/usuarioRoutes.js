@@ -15,12 +15,8 @@ router.get('/', authMiddleware, async (req, res) => {
 
 // Ruta para crear un nuevo usuario
 router.post('/', async (req, res) => {
-  const usuario = new Usuario({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  });
-
+  const usuario = new Usuario(req.body);
+  console.log(usuario);
   try {
     const nuevoUsuario = await usuario.save();
     res.status(201).json(nuevoUsuario);

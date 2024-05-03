@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
 
 // Ruta para el registro de usuario
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, roles, email, password } = req.body;
 
   // Verifica si el correo electrónico ya está en uso
   const usuarioExistente = await Usuario.findOne({ email });
@@ -52,13 +52,11 @@ router.post("/register", async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Crea un nuevo usuario
-  const nuevoUsuario = new Usuario({ username, email, password: hashedPassword });
+  const nuevoUsuario = new Usuario({ username, roles, email, password: hashedPassword });
 
   try {
     await nuevoUsuario.save();
-    res
-      .status(201)
-      .json({ success: true, message: "Usuario registrado correctamente" });
+    res.status(201).json({ success: true, message: "Usuario registrado correctamente: ", nuevoUsuario });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

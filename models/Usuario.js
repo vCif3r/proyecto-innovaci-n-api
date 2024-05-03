@@ -5,8 +5,8 @@ const usuarioSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   roles: {
     type: [String],
-    enum: ['admin', 'volunteer', 'visitor', 'donor', 'adopter'],
-    default: ['visitor'], // Valor predeterminado para el campo roles
+    enum: ["admin", "volunteer", "visitor", "donor", "adopter"],
+    default: ["visitor"], // Valor predeterminado para el campo roles
   },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true }
