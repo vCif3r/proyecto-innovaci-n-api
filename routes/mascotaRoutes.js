@@ -63,12 +63,12 @@ router.delete("/:id", authMiddleware, async (req, res) => {
 
 // Ruta para actualizar una mascota
 router.put("/:id", authMiddleware, async (req, res) => {
-  const { img, name, raza, age, descripcion, state } = req.body; // Puedes ajustar los campos según tu modelo
+  const { img, name, raza, age, description, state } = req.body; // Puedes ajustar los campos según tu modelo
 
   try {
     const mascota = await Mascota.findByIdAndUpdate(
       req.params.id,
-      { img, name, raza, age, descripcion, state }, // Aquí se especifican los campos que deseas actualizar
+      { img, name, raza, age, description, state }, // Aquí se especifican los campos que deseas actualizar
       { new: true } // Esto devuelve el documento actualizado
     );
 
