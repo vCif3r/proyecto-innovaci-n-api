@@ -54,8 +54,30 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     if (!mascota) {
       return res.status(404).json({ message: "mascota no encontrada" });
     }
-    await mascota.delete();
+    await mascota.deleteOne();
     console.log("Mascota deleted!")
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Ruta para actualizar una mascota
+router.put("/:id", authMiddleware, async (req, res) => {
+  const { img, name, raza, age, descripcion, state } = req.body; // Puedes ajustar los campos según tu modelo
+
+  try {
+    const mascota = await Mascota.findByIdAndUpdate(
+      req.params.id,
+      { img, name, raza, age, descripcion, state }, // Aquí se especifican los campos que deseas actualizar
+      { new: true } // Esto devuelve el documento actualizado
+    );
+
+    if (!mascota) {
+      return res.status(404).json({ message: "Mascota no encontrada" });
+    }
+
+    console.log("Mascota actualizada:", mascota);
+    res.json({ success: true, message: "Mascota actualizada correctamente", mascota });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
