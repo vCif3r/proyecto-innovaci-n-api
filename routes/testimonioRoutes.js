@@ -39,4 +39,38 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
+router.put("/:id", authMiddleware, async (req, res) => {
+  const { img, title, description } = req.body;
+
+  try {
+    const testimonio = await Testimonio.findByIdAndUpdate(
+      req.params.id,
+      { img, title, description },
+      { new: true }
+    );
+
+    if (!testimonio) {
+      return res.status(404).json({ message: "Testimonio no encontrado" });
+    }
+
+    console.log("Testimonio actualizado:", testimonio);
+    res.json({ success: true, message: "Testimonio actualizado correctamente", testimonio });
+  } catch (error) {
+    console.error("Error al actualizar el testimonio:", error); // Agrega un log para más detalles
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const testimonios = await Testimonio.findById(req.params.id);
+    if (!testimonios) {
+      return res.status(404).json({ message: "mascota no encontrada" });
+    }
+    await testimonios.deleteOne();
+    console.log("Mascota deleted!")
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 module.exports = router;
